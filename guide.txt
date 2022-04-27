@@ -1,0 +1,18 @@
+API BUILDING GUIDE
+
+PART ONE - BUILDING THE PROJECT FOUNDATIONS
+
+1 - Install EXPRESS GENERATOR - this will provide an express project template. <npm i express-generator>
+2 - Run the generator to start the project - specify that the project won't have any embedded views on it
+    <express --view=no-view javascript-notes-api>
+3 - Run <npm install> to install all the needed dependencies
+
+4 - Clean project. Remove from app.js (both the requirement and the calls):
+     - cookieParser (the project doesn't have integrated views)
+     - index route (the same reason)
+
+5 - Create app folder to gather all the app information: routes, configs, etc
+
+--------------------------------
+
+PART TWO - 
