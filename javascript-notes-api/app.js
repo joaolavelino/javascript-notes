@@ -1,8 +1,11 @@
 var express = require("express");
 var path = require("path");
 var logger = require("morgan");
+require("./config/database.js");
 
-var usersRouter = require("../app/routes/users");
+//--------ROUTES----------
+var usersRouter = require("./app/routes/users");
+var notesRouter = require("./app/routes/notes");
 
 var app = express();
 
@@ -11,6 +14,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
+//the middleware already calls "/users" before the users routes
 app.use("/users", usersRouter);
+app.use("/notes", notesRouter);
 
 module.exports = app;

@@ -1,5 +1,10 @@
 API BUILDING GUIDE
 
+PART ZERO - INSTALL MONGODB ON YOUR COMPUTER 
+Follow this up!
+https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-os-x/
+
+
 PART ONE - BUILDING THE PROJECT FOUNDATIONS
 
 1 - Install EXPRESS GENERATOR - this will provide an express project template. <npm i express-generator>
@@ -13,6 +18,110 @@ PART ONE - BUILDING THE PROJECT FOUNDATIONS
 
 5 - Create app folder to gather all the app information: routes, configs, etc
 
+6 - Install Nodemon - HOT RELOAD! <npm i nodemon --save-dev>
+    2 options - run <npx nodemon> or add this to the "dev" script at the package.json
+
+----------------------------------
+
+PART TWO - API FOUNDATIONS
+
+1 - Instal MONGOOSE = It'll be the connexion to the Database
+    <npm i mongoose --save>
+2 - Create a config folder on the root of the api project and a database.js file inside. This will be the file that will connect to the Database. 
+
+AT database.js (look specific instructions on the file)
+3.1 - import mongoose 
+3.2 - connect mongoose with the global promise (WTF IS THE GLOBAL PROMISE??!!)
+3.3 - Connect with the DB
+
+ON app.js:
+4.1 - Require the database.js file
+
 --------------------------------
 
-PART TWO - 
+PART THREE - DATA STRUCTURE (Model creation!)
+
+1 - create models folder inside app folder
+2 - there, create 2 js files "note" and "user"
+
+on the created files:
+3-1 - import mongoose
+3-2 - create the schema
+3-3 - export the schema
+
+--------------------------------
+
+PART FOUR - AUTHORIZATION - transform the passport into a hash
+
+1 - Install BCRYPT - <npm i bcrypt --save>
+
+ON the user.js file (models/user.js)
+2-1 - require bcrypt
+2-2 - create a function that will run before the data is called that will create the hash and replace the password
+
+---------------------------------
+
+PART FIVE - USER REGISTER 
+
+on the user route (created by the generator)
+1- import the model
+2 - remove the pre-made route
+3 - create the register route
+4 - all the exports and imports of this route are already done by the express generator (the next ones will be created)
+5 - test the request on postman
+
+---------------------------------
+
+PART SIX - USER LOGIN
+
+First: Check if the password is correct
+On the user model file.
+1 - create function that will compare the passwords (the boilerplate function is on the file, just copy on the next project)
+
+2 - install the JWT library - that will create a token for the user <npm i jsonwebtoken --save>
+
+this library creates the token based on the user data and a secret key that's on the application ( it will be created on an environment variable and shouldn't be available on github)
+
+3 - instal the DOTENV library <npm i dotenv --save>
+
+4 - Create a file called .env on the api root
+5 - create an environment variable - it contains the name (always capitalized and a random string - it cannot be changed)
+
+on the users router file:
+6 - require the jsonwebtoken
+7 - require the dotenv and calling the config method
+8 - declare the secret variable from the environment variable
+9 - create the login route (all the instructions on the file)
+10 - test the request on postman
+
+-----------------------------------
+
+PART SEVEN - AUTH - VERIFY THE USER BASED ON THE TOKEN
+this will be used on the notes routes
+
+on the app folder, create the middlewares folder and inside of it, create the AUTH.js file.
+1 - require the environment variable (so the app can decode the token and find the user email - which was used on the creation of the token)
+2 - require the JWT library
+3 - require de User model
+4 - create the middleware (all the instructions on the file)
+5 - export the module
+
+-----------------------------------
+
+PART EIGHT - FIRST NOTES ROUTES
+
+1 - Create the notes.js file on the routes folder
+2 - require express, router and the Note model
+3 - Create the post route
+4 - Export the module
+
+on the app.js file
+5 - import the router and declare it
+
+use the WithAuth middleware created on part7 on the route
+6 - import the middleware
+7 - declare the middleware right after the path on the route (before the function)
+----if we test the route on postman now--- it will already recognize the middleware, but since no token was provided, it will trigger the error on the middleware
+
+On POSTMAN
+provide a token on the request header using the same name that was set on the middleware 
