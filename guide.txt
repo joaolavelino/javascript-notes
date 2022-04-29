@@ -125,3 +125,68 @@ use the WithAuth middleware created on part7 on the route
 
 On POSTMAN
 provide a token on the request header using the same name that was set on the middleware 
+
+--------------------------
+
+PART NINE - GETTING A NOTE BY ID
+
+on the Notes routes file:
+
+1- Create a new get route.
+2 - Create a method to check if the user is the owner of that note
+3 - Test the route on Postman (test with other user to see if the isOwner method is working)
+
+---------------------------
+
+PART TEN - GETTING A LIST OF NOTES
+
+on the Notes routes file
+
+1 - create a new get note list by user route
+2 - test on Postman (yes, it's simple as that..)
+
+----------------------------
+
+PART ELEVEN - UPDATING A NOTE
+
+on the Notes route:
+
+1 - create a put route
+2 - test on Postman (yes, it's simple as that..)
+
+----------------------------
+
+PART TWELVE - DELETING A NOTE
+
+on the Notes route:
+
+1 - create a delete route
+2 - test on Postman (yes, it's simple as that..)
+--For some reason, the response status needs to be after the message.
+
+----------------------------
+
+PART THIRTEEN - SEARCHING FOR A NOTE
+
+on the Notes route 
+1 - create a delete route
+***
+IT NEEDS TO BE _BEFORE_ THE ROUTES WITH ID
+***
+--also in this case, on the error, the response status is put after the error message.
+2 - on the note model file, create a text index to help the search.
+3 - on postman- it's necessary to put a query value on the params.
+4 - test on Postman 
+
+----------------------------
+
+PART FOURTEEN - ALLOWING THE CORS
+(this will allow the API to be used on other applications from different domains)
+To allow a web application to use the api, it's needed that the api itself allows it.
+
+1 - Install the CORS library - npm i cors --save
+2 - on APP.JS - require the library
+3 - call the cors middleware
+
+
+DONE!! NOW ONTO THE CLIENT!!
