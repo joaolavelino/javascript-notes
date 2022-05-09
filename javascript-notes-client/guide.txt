@@ -1,0 +1,113 @@
+REACT CLIENT GUIDE
+
+PART ZERO - START ALL THE LIBRARIES
+
+RBX - used to use bulma - npm i rbx --save --legacy-peer-deps
+React Router Dom -
+Axios - API requests
+Node-sass
+Bulma - 
+Moment - 
+React-burger-menu
+Font Awesome-
+  npm i @fortawesome/fontawesome-svg-core --save
+  npm i @fortawesome/free-solid-svg-icons --save
+  npm i @fortawesome/react-fontawesome --save
+  
+
+
+  --PART ONE-- GLOBAL STYLES WITH BULMA
+  - transform the app.css into app.scss
+  - create a _custom_colors file
+  - import on the neww app.css file:
+    - charset;
+    - bulme functions;
+    - custom colors file (this will allow us to use the custom colors we set on the color file on the project easily)
+    - import bulma styles and the rbx
+
+
+  -- CONNECT WITH THE API
+
+  create a SERVICES FOLDER and a API.js file
+  1 - import Axios
+  2 - Set the base URL and Export the Api
+
+  Create a USERS.js file - here will be all the user-related requests
+  1 - import the api
+  2 - create a request object (created at first the register request)
+
+  Now at the RegisterForm component:
+  1 - import the UserService ( the object with the request)
+  2 - on the handleSubmit function call the register method inside of UsersService on an async function
+
+  ----_TEST IT OUT------
+  Run the api on the port3001 <PORT=3001 npm run dev>
+  register a test user and check the network tab on the inspect
+
+
+  ------LOGIN -------
+
+  this time it's needed to store the response of the server on the localstorage
+
+  ------Private Routes-----
+
+  To protect the private routes of being accessed without a login, we'll use Nested Routes.
+  On the main route we'll call the element PrivateRoute, and in the nested route we'll call the correct element.
+
+  The private route element will have an variable that will be the user info from the localstorage, if it's in there, it will call the OUTLET component from React router dom and it'll trigger the nested route. If not, it will send you to the login page using the NAVIGATE component from React router dom (NOT THE useNavigate hook)
+
+  ------ GET A NOTE -------
+  The same as we did with the users. BUT this time we need to feed the withAuth function (from the Notes Routes, on the api) with the token.
+  We used to put it manually on the header on postman, now we can set it on a header object on the request.
+
+  ------ CREATE A NOTE -------
+  The note creation is done in two steps. First we create a default note, then we edit them before posting it.
+
+  Create the method on the notesService component with the default informations in a separate object before the header.
+  
+  On the notes component:
+  create an async function to run the create method and then run the fetch method (to update the list)
+
+  Create a button that triggers this function
+
+  ------- DELETE A NOTE -------
+  Create the method on the notesService. The id is sent by the parameters, and put into the url.
+
+  Notes component: Create a delete function - i'll add a confirmation so it's more difficult to delete notes accidentally
+
+  -------- CREATE THE EDITOR ---------
+  instal react-quill <npm i react-quill --legacy-peer-deps >
+
+  on the editor component - import quill and the theme css choose the modules and put the component there with the value and the modules.
+
+  ------- EDITING A NOTE ---------
+  This will require a couple of steps:
+  
+  1) on the NotesService component: Like the delete method, it's needed aditional information that will be sent by the funcition arguments. This time there are 2 things, the Id and "params"that will be the body of the request, they are put before the header object, just like the infos of the new note.
+
+  2) on the Notes component: Create a updateNote function. It's a bit more complex than the others because we're doing an auto-save function.
+  (if we weren't, the function would be much more simpler. Just call the update method on NotesService and then fetch the notes to update the list - we can later implement this simpler function with a save button on the editor)
+
+  For the auto-save we don't want to fetch data everytime we stop writing. So we make a temporary notes list based on our list state -  that still doesn't have the updated version because we didn't fetch - [notes] and we put the updtated note on this new list.
+  than we set the Notes state with this temporary list and set the currentNote with the updated note.
+
+  I also created a backup version of the note list without the changes, so we can discard the changes we made that were auto-saved using another function.
+
+  3) on the Editor component:
+  We need to create 2 methods, a handleChange for the editor and a method that will trigger the updateNote function that we created on step 2.
+
+  First, the completeUpdateMethod: It will recieve the content of the note: sent by Quill. We need to take a part of the content, the 30 first chars to make title.
+  Then trigger the updateNote function with the title and body of the note as the "params"
+
+  Second, the handleChange:
+  This function recieves 3 infos from Quill:
+  content, delta and source.
+  content is the content itself (updated),
+  delta is the last modifications.
+  source is who made the last changes. (either the api when fetching or the user while updating)
+
+  To enable the auto-save we need to create a state called timer.
+  if the source is the user, we update the state that binds the value and set a timeOut inside the timer state... we'll wait a couple of seconds to trigger the update method. 
+
+  above it all we'll set a clearTimeout(timer), so everytime we change (type) something the timer goes to zero and start waiting again to the moment we stop typing. 
+

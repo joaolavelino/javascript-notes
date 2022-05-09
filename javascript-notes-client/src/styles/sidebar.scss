@@ -1,0 +1,47 @@
+@import "./custom_colors";
+
+.shadow {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 70px;
+  left: 0;
+  z-index: 9;
+  background-color: black;
+  opacity: 0.6;
+  transition: 0.2s;
+  &.transparent {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+aside {
+  position: fixed;
+  top: 70px;
+  width: 300px;
+  min-height: calc(100vh - 70px);
+  background-color: $gray;
+  transition: 0.2s;
+  box-shadow: 10px 0 30px rgba($color: #000000, $alpha: 0.3);
+  z-index: 10;
+  &.hidden {
+    transform: translateX(-300px);
+    box-shadow: none;
+  }
+  @media screen and (max-width: 500px) {
+    width: 100vw;
+    padding-right: 1rem;
+    &.hidden {
+      transform: translateX(-100vw);
+    }
+  }
+}
+
+.close {
+  text-align: right;
+  padding: 1rem;
+  * {
+    cursor: pointer;
+  }
+}
