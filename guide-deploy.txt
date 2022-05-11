@@ -1,0 +1,6 @@
+1 - create an Heroku account
+2 - download and install the cli
+  <brew tap heroku/brew && brew install heroku>
+  Follow the instructions here:
+  https://devcenter.heroku.com/articles/heroku-cli
+
