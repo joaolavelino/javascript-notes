@@ -20,7 +20,9 @@ aside {
   position: fixed;
   top: 70px;
   width: 300px;
-  min-height: calc(100vh - 70px);
+  height: calc(100vh - 70px);
+  overflow-y: scroll;
+  overflow-x: hidden;
   background-color: $gray;
   transition: 0.2s;
   box-shadow: 10px 0 30px rgba($color: #000000, $alpha: 0.3);
@@ -44,4 +46,12 @@ aside {
   * {
     cursor: pointer;
   }
+}
+
+.search-bar {
+  padding: 1rem;
+}
+
+.notes-header {
+  padding: 0.5rem 1rem 1rem;
 }

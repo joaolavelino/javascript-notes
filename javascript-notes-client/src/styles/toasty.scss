@@ -1,0 +1,14 @@
+.toasty {
+  position: fixed;
+  bottom: 0;
+  right: 2rem;
+  padding: 1rem 2rem;
+  background-color: white;
+  border-radius: 0.5rem 0.5rem 0 0;
+  box-shadow: 5px -5px 10px rgba($color: #000000, $alpha: 0.3);
+  transition: 0.2s;
+  &.hidden {
+    transform: translateY(5rem);
+    opacity: 0;
+  }
+}

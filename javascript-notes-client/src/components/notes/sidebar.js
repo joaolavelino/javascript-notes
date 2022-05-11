@@ -4,6 +4,7 @@ import "../../styles/sidebar.scss";
 import { Button, Column, Section } from "rbx";
 import NotesList from "./noteList";
 import { ColumnGroup } from "rbx/grid/columns/column-group";
+import SearchNotes from "./search";
 
 const Sidebar = ({
   sidebar,
@@ -13,6 +14,8 @@ const Sidebar = ({
   selectNote,
   createNote,
   deleteNote,
+  searchNote,
+  fetchNotes,
 }) => {
   return (
     <>
@@ -22,7 +25,7 @@ const Sidebar = ({
       />
       <aside className={`${sidebar ? "" : "hidden"}`}>
         <section>
-          <h2>Search</h2>
+          <SearchNotes searchNote={searchNote} fetchNotes={fetchNotes} />
         </section>
         <section>
           <NotesList

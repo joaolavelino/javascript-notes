@@ -8,6 +8,8 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const secret = process.env.JWT_TOKEN;
 
+const withAuth = require(`../middlewares/auth`);
+
 //--USER REGISTER ROUTE--
 router.post("/register", async (req, res) => {
   // read these 3 infos from the body of the request
@@ -38,6 +40,7 @@ router.post("/login", async (req, res) => {
       //if the user exists throw the password verification function that was created in the model.
       user.isCorrectPassword(password, (err, same) => {
         //if the password is not the same - throw unavailable resource status and error
+        console.log(same);
         if (!same)
           res.status(401).json({ error: "Incorrect email or password" });
         else {
@@ -51,6 +54,57 @@ router.post("/login", async (req, res) => {
   } catch (error) {
     //if it's not ok, throw back the failure status 500 (internal server eror) and the error - this is not the wrong password
     res.status(500).json({ error: "Internal server error, please try again." });
+  }
+});
+
+//--USER NAME EDIT ROUTE--
+router.put("/edit/name", withAuth, async (req, res) => {
+  const { name } = req.body;
+  try {
+    let user = await User.findByIdAndUpdate(
+      req.user._id,
+      { $set: { name: name } },
+      { upsert: false, new: true }
+    );
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ error: "Unable to update user name" });
+  }
+});
+//--USER EMAIL EDIT ROUTE--
+router.put("/edit/email", withAuth, async (req, res) => {
+  const { email } = req.body;
+  try {
+    let user = await User.findByIdAndUpdate(
+      req.user._id,
+      { $set: { email: email } },
+      { upsert: false, new: true }
+    );
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ error: "Unable to update user email" });
+  }
+});
+//--USER NAME EDIT ROUTE--
+router.put("/edit/password", withAuth, async (req, res) => {
+  const { password } = req.body;
+  try {
+    let user = await User.findOne({ _id: req.user._id });
+    user.password = password;
+    user.save();
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ error: "Unable to update user password" });
+  }
+});
+
+//--USER DELETE ROUTE -
+router.delete("/", withAuth, async (req, res) => {
+  try {
+    await User.findByIdAndDelete(req.user._id);
+    res.status(201).json({ message: "User successfully deleted" });
+  } catch (error) {
+    res.status(500).json({ error: "Unable to delete user" });
   }
 });
 

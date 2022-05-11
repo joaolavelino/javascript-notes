@@ -28,18 +28,12 @@ const NotesService = {
       headers: { "x-access-token": localStorage.getItem("token") },
       //nesse caso, como precisamos autentificar o usuário na api, passamos o token na header da requisição
     }),
+  search: (query) =>
+    //here I need the query that's defined by the header of the request so it's going to appear on the api
+    Api.get(`/notes/search?query=${query}`, {
+      headers: { "x-access-token": localStorage.getItem("token") },
+      //nesse caso, como precisamos autentificar o usuário na api, passamos o token na header da requisição
+    }),
 };
 
 export default NotesService;
-
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvYW9Aam9hby5jb20iLCJpYXQiOjE2NTIxMDY3MzEsImV4cCI6MTY1Mjk3MDczMX0.vruLgcpiGbtK5VZL25k-OJ-YPSdNbWYYTa3-Ug4PEnw
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvYW9Aam9hby5jb20iLCJpYXQiOjE2NTIxMDY3MzEsImV4cCI6MTY1Mjk3MDczMX0.vruLgcpiGbtK5VZL25k-OJ-YPSdNbWYYTa3-Ug4PEnw
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvYW9Aam9hby5jb20iLCJpYXQiOjE2NTIxMDY3MzEsImV4cCI6MTY1Mjk3MDczMX0.vruLgcpiGbtK5VZL25k-OJ-YPSdNbWYYTa3-Ug4PEnw
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvYW9Aam9hby5jb20iLCJpYXQiOjE2NTIxMDY3MzEsImV4cCI6MTY1Mjk3MDczMX0.vruLgcpiGbtK5VZL25k-OJ-YPSdNbWYYTa3-Ug4PEnw
-
-// 626a8a0ec8d0231c3b3fd24a
-// 627421b76fb79e19eb3d089f
-
-// local st                              userid 627421b76fb79e19eb3d089f
-// old note id 626aad5b5482e159e2a3ea86  author 627421b76fb79e19eb3d089f
-// new note id 626aad5b5482e159e2a3ea86  author 627421b76fb79e19eb3d089f

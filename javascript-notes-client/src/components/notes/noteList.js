@@ -1,6 +1,6 @@
 import React from "react";
 import Moment from "moment";
-import { Button, Column, List, Tag, Title } from "rbx";
+import { Button, Column, Heading, List, Section, Tag, Title } from "rbx";
 import "../../styles/notesList.scss";
 import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,19 +14,15 @@ const NotesList = ({
 }) => {
   return (
     <>
-      <Column.Group>
-        <Column size={4} offset={1} className="has-text-weight-bold">
-          <Title size={6}>{notes.length} notes</Title>
-        </Column>
-        <Column size={3}>
-          <Button
-            className="button is-12 is-primary has-text-weight-bold "
-            onClick={createNote}
-          >
-            New note
-          </Button>
-        </Column>
-      </Column.Group>
+      <div className="notes-header is-flex is-align-items-center is-justify-content-space-around">
+        <Heading size={6}>{notes.length} notes</Heading>
+        <Button
+          className="button is-12 is-primary has-text-weight-bold "
+          onClick={createNote}
+        >
+          New note
+        </Button>
+      </div>
       <List className="notes-list">
         {notes.map((item, key) => (
           <List.Item

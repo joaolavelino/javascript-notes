@@ -1,11 +1,22 @@
-import { Column, Control, Field, Input, Label, Section, Textarea } from "rbx";
+import { isDisabled } from "@testing-library/user-event/dist/utils";
+import {
+  Button,
+  Column,
+  Control,
+  Field,
+  Input,
+  Label,
+  Section,
+  Textarea,
+} from "rbx";
 import React, { useEffect, useState } from "react";
 import ReactQuill from "react-quill"; // ES6
 import "react-quill/dist/quill.snow.css"; // ES6
 
-const Editor = ({ currentNote, updateNote }) => {
-  const [currentContent, setCurrentContent] = useState({ title: "", body: "" });
+const Editor = ({ currentNote, updateNote, updateNoteDirectSave }) => {
+  const [currentContent, setCurrentContent] = useState();
   const [timer, setTimer] = useState(null);
+  const [saveButton, setSaveButton] = useState(false);
 
   useEffect(() => {
     setCurrentContent(`${currentNote.body}`);
@@ -30,14 +41,24 @@ const Editor = ({ currentNote, updateNote }) => {
   const handleChange = (content, delta, source) => {
     clearTimeout(timer);
     if (source == "user") {
+      setSaveButton(true);
       setCurrentContent(content);
       setTimer(
         setTimeout(() => {
           console.log("saving");
           completeUpdateMethod(content);
-        }, 3000)
+        }, 5000)
       );
     }
+  };
+
+  const handleSave = () => {
+    const title = currentContent.replace(/(<([^>]+)>)/gi, "").slice(0, 30);
+    updateNoteDirectSave(currentNote, {
+      title: title,
+      body: currentContent,
+    });
+    setSaveButton(false);
   };
 
   const completeUpdateMethod = (content) => {
@@ -51,39 +72,17 @@ const Editor = ({ currentNote, updateNote }) => {
 
   return (
     <>
-      <ReactQuill
-        theme="snow"
-        value={currentContent}
-        modules={modules}
-        onChange={handleChange}
-      />
+      <ReactQuill theme="snow" value={currentContent} onChange={handleChange} />
+      <Section>
+        <Button
+          className="button is-success has-text-weight-bold"
+          disabled={!saveButton}
+          onClick={handleSave}
+        >
+          Save
+        </Button>
+      </Section>
     </>
-
-    // <Section>
-    //   <Column size={12}>
-    //     <Field>
-    //       <Label size="small">Title</Label>
-    //       <Control>
-    //         <Input
-    //           type="text"
-    //           name="title"
-    //           value={currentContent.title}
-    //           onChange={handleChange}
-    //         />
-    //       </Control>
-    //     </Field>
-    //     <Field>
-    //       <Label size="small">Content</Label>
-    //       <Control>
-    //         <Textarea
-    //           name="body"
-    //           value={currentContent.body}
-    //           onChange={handleChange}
-    //         />
-    //       </Control>
-    //     </Field>
-    //   </Column>
-    // </Section>
   );
 };
 

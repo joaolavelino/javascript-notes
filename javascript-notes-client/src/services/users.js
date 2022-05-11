@@ -14,6 +14,21 @@ const UsersService = {
     localStorage.removeItem("user", null);
     localStorage.removeItem("token", null);
   },
+  update: async (info, params) => {
+    //the additional 'info' argument was created so we can change which parameter of the user will be changed... if we call 'email', it will go through the email edit route of the api, and it will look for the email parameter on the req.body
+    const response = await Api.put(`/users/edit/${info}`, params, {
+      headers: { "x-access-token": localStorage.getItem("token") },
+    });
+    info != "password" &&
+      localStorage.setItem("user", JSON.stringify(response.data));
+  },
+  delete: async () => {
+    await Api.delete("/users", {
+      headers: { "x-access-token": localStorage.getItem("token") },
+    });
+    localStorage.removeItem("user", null);
+    localStorage.removeItem("token", null);
+  },
 };
 
 export default UsersService;

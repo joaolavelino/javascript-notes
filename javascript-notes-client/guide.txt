@@ -111,3 +111,17 @@ Font Awesome-
 
   above it all we'll set a clearTimeout(timer), so everytime we change (type) something the timer goes to zero and start waiting again to the moment we stop typing. 
 
+  I created a save button that automatically saves the note and fetches... When the person is done editing, he doesn't need to wait for the auto-save
+
+
+  ------ SEARCHING ----
+  Quite simple after editing...
+
+  On notesService: create the search method.. it only requires the query that will be part of the url
+
+  On the notes component: 
+  Create the search function: it will only make the request and reverse the results, so the most recent appears first...]
+
+  on the search component, create a query state to control the form and suply the searchNote function.
+
+  also create the clear function, that only clears the query state and fetch the notes again
